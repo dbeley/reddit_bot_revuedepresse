@@ -77,7 +77,7 @@ def main():
     url = imgur_folder_upload(directory_imgur, client)
 
     logger.debug("Envoi du message")
-    reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
+    reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
 
     logger.debug("Runtime : %.2f seconds" % (time.time() - temps_debut))
 

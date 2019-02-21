@@ -2,3 +2,4 @@ config_imgur
 praw.ini
 reddit_bot_revuedepresse/
 Images/
+__pycache__/
