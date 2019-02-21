@@ -3,8 +3,8 @@ Description=bot reddit
 
 [Service]
 Type=oneshot
-WorkingDirectory=~
-ExecStart=/usr/bin/python Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py
+WorkingDirectory=%h/Documents/reddit_bot_revuedepresse/
+ExecStart=/usr/bin/python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py
 
 [Install]
 WantedBy=multi-user.target

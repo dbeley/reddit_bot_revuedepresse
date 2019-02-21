@@ -60,7 +60,7 @@ def main():
     logger.debug("Connexion à reddit")
     reddit = redditconnect('revuedepresse')
 
-    directory = "reddit_bot_revuedepresse"
+    directory = "Images"
     try:
         os.makedirs(os.path.expanduser(directory))
     except OSError as e:
