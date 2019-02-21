@@ -5,7 +5,7 @@
 - scrap_revuedepresse_simple
 - imgur config
 - praw.ini
-- systemd files in ~/.config/systemd/user/default.target.wants/
+- systemd files in ~/.config/systemd/user/
 
 
 ```
