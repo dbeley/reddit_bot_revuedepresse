@@ -69,7 +69,7 @@ def main():
     os.chdir(directory)
 
     logger.debug("Scrapping")
-    os.system("scrap_revuedepresse_simple")
+    os.system("scrap_revuedepresse")
 
     directory_imgur = auj + "/"
 
@@ -78,6 +78,7 @@ def main():
 
     logger.debug("Envoi du message")
     reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
+    # reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
 
     logger.debug("Runtime : %.2f seconds" % (time.time() - temps_debut))
 
