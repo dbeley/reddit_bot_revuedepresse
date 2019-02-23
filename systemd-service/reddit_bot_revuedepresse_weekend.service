@@ -4,7 +4,7 @@ Description=bot reddit
 [Service]
 Type=oneshot
 WorkingDirectory=%h/Documents/reddit_bot_revuedepresse/
-ExecStart=/usr/bin/python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py -f liste_journaux_weekend.csv
+ExecStart=/usr/bin/python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py -w
 
 [Install]
 WantedBy=multi-user.target
