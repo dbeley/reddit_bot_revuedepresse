@@ -86,7 +86,6 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser(description='Reddit bot')
     parser.add_argument('--debug', help="Display debugging information", action="store_const", dest="loglevel", const=logging.DEBUG, default=logging.INFO)
-    parser.set_defaults(weekend=False)
     args = parser.parse_args()
     logging.basicConfig(level=args.loglevel)
     return args

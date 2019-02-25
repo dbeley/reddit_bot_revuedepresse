@@ -1,15 +1,18 @@
 # reddit_bot_revuedepresse
 
-## Pre-requisites
+## Requirements
 
 - python-praw
 - python-imgurpython
-- scrap_revuedepresse_simple
 - imgur config
 - praw.ini
 - systemd files in ~/.config/systemd/user/
+- [scrap_revuedepresse](https://github.com/dbeley/scrap_revuedepresse)
+
+## Usage
 
 ```
 systemctl --user daemon-reload
-systemctl --user enable --now reddit_bot_revuedepresse
+systemctl --user enable --now reddit_bot_revuedepresse.timer
+systemctl --user start reddit_bot_revuedepresse
 ```
