@@ -47,7 +47,6 @@ def imgur_folder_upload(directory, client):
 
 def main():
     args = parse_args()
-    weekend = args.weekend
     locale.setlocale(locale.LC_TIME, "fr_FR.utf-8")
     auj = datetime.datetime.now().strftime("%Y-%m-%d")
     jour = datetime.datetime.now().strftime("%A %d %B %Y")
@@ -70,12 +69,7 @@ def main():
     os.chdir(directory)
 
     logger.debug("Scrapping")
-    if weekend:
-        logger.debug("Weekend")
-        os.system("scrap_revuedepresse -f liste_journaux_weekend.csv")
-    else:
-        logger.debug("Semaine")
-        os.system("scrap_revuedepresse -f liste_journaux.csv")
+    os.system("scrap_revuedepresse")
 
     directory_imgur = auj + "/"
 
@@ -92,7 +86,6 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser(description='Reddit bot')
     parser.add_argument('--debug', help="Display debugging information", action="store_const", dest="loglevel", const=logging.DEBUG, default=logging.INFO)
-    parser.add_argument('-w', '--weekend', dest='weekend', action='store_true')
     parser.set_defaults(weekend=False)
     args = parser.parse_args()
     logging.basicConfig(level=args.loglevel)
