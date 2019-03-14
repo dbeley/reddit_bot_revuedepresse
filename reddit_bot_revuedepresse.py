@@ -38,6 +38,7 @@ def imgur_folder_upload(directory, client):
     for file in sorted(pathlist):
         logger.debug(f"Upload image {file}")
         client.upload_from_path(str(file), config=config_image)
+        time.sleep(8)
 
     final_url = f"https://imgur.com/a/{album['id']}"
     logger.debug(final_url)
@@ -47,6 +48,8 @@ def imgur_folder_upload(directory, client):
 
 def main():
     args = parse_args()
+    test = args.test
+    international = args.international
     locale.setlocale(locale.LC_TIME, "fr_FR.utf-8")
     auj = datetime.datetime.now().strftime("%Y-%m-%d")
     jour = datetime.datetime.now().strftime("%A %d %B %Y")
@@ -54,11 +57,15 @@ def main():
     config.read('config_imgur')
     client_id = config['imgur']['client_id']
     client_secret = config['imgur']['client_secret']
-    logger.debug("Connexion à imgur")
     client = ImgurClient(client_id, client_secret)
 
-    logger.debug("Connexion à reddit")
-    reddit = redditconnect('revuedepresse')
+    if test:
+        reddit = redditconnect('revuedepresse_test')
+    else:
+        reddit = redditconnect('revuedepresse')
+
+    with open('post_inter.txt', 'r') as myfile:
+        comment_inter= myfile.read()
 
     directory = "Images"
     try:
@@ -68,17 +75,44 @@ def main():
             raise
     os.chdir(directory)
 
-    logger.debug("Scrapping")
-    os.system("scrap_revuedepresse")
+    if not international:
+        logger.debug("Scrapping")
+        os.system("scrap_revuedepresse")
+        try:
+            directory_imgur = auj + "/"
+            logger.debug(f"Upload à imgur du dossier {directory_imgur}")
+            url = imgur_folder_upload(directory_imgur, client)
+        except Exception as e:
+            logger.error(str(e))
+            exit()
+        logger.debug("Envoi du post")
+        if test:
+            post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
+        else:
+            post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
 
-    directory_imgur = auj + "/"
+    else:
+        logger.debug("Scrapping (international)")
+        os.system("scrap_revuedepresse --international")
+        try:
+            directory_imgur_int = auj + "_international/"
+            logger.debug(f"Upload à imgur du dossier {directory_imgur_int}")
+            url_int = imgur_folder_upload(directory_imgur_int, client)
+        except Exception as e:
+            logger.error(str(e))
+            exit()
 
-    logger.debug(f"Upload à imgur du dossier {directory_imgur}")
-    url = imgur_folder_upload(directory_imgur, client)
+        # logger.debug("Envoi du post")
+        # if test:
+        #     post = reddit.subreddit("test").submit(f"Revue de presse internationale du {jour}", url=url_int)
+        # else:
+        #     post = reddit.subreddit("france").submit(f"Revue de presse internationale du {jour}", url=url_int)
 
-    logger.debug("Envoi du message")
-    reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
-    # reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
+        logger.debug("Envoi du commentaire (international)")
+        rdp = reddit.user.me()
+        for post in rdp.submissions.new():
+            post.reply(eval(comment_inter))
+            break
 
     logger.debug("Runtime : %.2f seconds" % (time.time() - temps_debut))
 
@@ -86,6 +120,9 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser(description='Reddit bot')
     parser.add_argument('--debug', help="Display debugging information", action="store_const", dest="loglevel", const=logging.DEBUG, default=logging.INFO)
+    parser.add_argument('-t', '--test', help="Switch from the revuedepresse to the revuedepresse_test user", dest='test', action='store_true')
+    parser.add_argument('-i', '--international', help="Add a comment containing the international version on the last post of the user", dest='international', action='store_true')
+    parser.set_defaults(test=False, international=False)
     args = parser.parse_args()
     logging.basicConfig(level=args.loglevel)
     return args

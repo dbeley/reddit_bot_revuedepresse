@@ -1,0 +1,39 @@
+f"""
+## Revue de presse Internationale
+
+{url_int}
+
+### Pays d'origine des journaux
+
+Titre | Pays
+------|-----
+The Guardian | Royaume-Uni
+The Times | Royaume-Uni
+Daily Mail | Royaume-Uni
+Le Monde | France
+Le Figaro | France
+Die Welt | Allemagne
+Frankfurter Allgemeine | Allemagne
+El Mundo | Espagne
+El País | Espagne
+La Repubblica | Italie
+La Stampa | Italie
+The Irish Times | Irlande
+Tribune de Genève | Suisse
+De Morgen | Belgique
+Algemeen Dagblad | Pays-Bas
+New York Times | États-Unis
+The Washington Post | États-Unis
+The Globe and Mail | Canada
+Komsomolskaya Pravda | Russie
+Hindustan Times | Inde
+China Daily | Chine
+The Japan Times | Japon
+Cumhuriyet | Turquie
+Gulf News | Arabie Saoudite
+The Star | Afrique du Sud
+O Globo | Brésil
+Clarín | Argentine
+The Australian | Australie
+
+"""

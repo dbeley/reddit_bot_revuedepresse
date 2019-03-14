@@ -3,3 +3,4 @@ praw.ini
 reddit_bot_revuedepresse/
 Images/
 __pycache__/
+test*
