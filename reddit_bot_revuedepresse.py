@@ -64,7 +64,7 @@ def main():
     else:
         reddit = redditconnect('revuedepresse')
 
-    with open('post_inter.txt', 'r') as myfile:
+    with open('comment_inter.txt', 'r') as myfile:
         comment_inter= myfile.read()
 
     directory = "Images"
