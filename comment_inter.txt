@@ -36,4 +36,9 @@ O Globo | Brésil
 Clarín | Argentine
 The Australian | Australie
 
+## Code source
+
+- [Extraction des images](https://github.com/dbeley/scrap_revuedepresse)
+- [Bot](https://github.com/dbeley/reddit_bot_revuedepresse)
+
 """

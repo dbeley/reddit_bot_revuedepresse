@@ -1,5 +1,7 @@
 # reddit_bot_revuedepresse
 
+Reddit bot behind the /u/revuedepresse account.
+
 ## Requirements
 
 - python-praw
