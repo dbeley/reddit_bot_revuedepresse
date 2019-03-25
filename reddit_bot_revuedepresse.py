@@ -65,7 +65,7 @@ def main():
         reddit = redditconnect('revuedepresse')
 
     with open('comment_inter.txt', 'r') as myfile:
-        comment_inter= myfile.read()
+        comment_inter = myfile.read()
 
     directory = "Images"
     try:
@@ -90,6 +90,7 @@ def main():
             post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
         else:
             post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
+            post.flair.select("48645bbe-1363-11e4-b184-12313b01142d")
 
     else:
         logger.debug("Scrapping (international)")
@@ -101,12 +102,6 @@ def main():
         except Exception as e:
             logger.error(str(e))
             exit()
-
-        # logger.debug("Envoi du post")
-        # if test:
-        #     post = reddit.subreddit("test").submit(f"Revue de presse internationale du {jour}", url=url_int)
-        # else:
-        #     post = reddit.subreddit("france").submit(f"Revue de presse internationale du {jour}", url=url_int)
 
         logger.debug("Envoi du commentaire (international)")
         rdp = reddit.user.me()
