@@ -49,6 +49,7 @@ def imgur_folder_upload(directory, client):
 def main():
     args = parse_args()
     test = args.test
+    post_to_reddit = args.post_to_reddit
     international = args.international
     locale.setlocale(locale.LC_TIME, "fr_FR.utf-8")
     auj = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -64,8 +65,8 @@ def main():
     else:
         reddit = redditconnect('revuedepresse')
 
-    with open('post_inter.txt', 'r') as myfile:
-        comment_inter= myfile.read()
+    with open('comment_inter.txt', 'r') as myfile:
+        comment_inter = myfile.read()
 
     directory = "Images"
     try:
@@ -85,11 +86,15 @@ def main():
         except Exception as e:
             logger.error(str(e))
             exit()
-        logger.debug("Envoi du post")
-        if test:
-            post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
-        else:
-            post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
+
+        logger.debug(f"URL national : {url}")
+
+        if post_to_reddit:
+            logger.debug("Envoi du post")
+            if test:
+                post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
+            else:
+                post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
 
     else:
         logger.debug("Scrapping (international)")
@@ -107,12 +112,14 @@ def main():
         #     post = reddit.subreddit("test").submit(f"Revue de presse internationale du {jour}", url=url_int)
         # else:
         #     post = reddit.subreddit("france").submit(f"Revue de presse internationale du {jour}", url=url_int)
+        logger.debug(f"URL international : {url_int}")
 
-        logger.debug("Envoi du commentaire (international)")
-        rdp = reddit.user.me()
-        for post in rdp.submissions.new():
-            post.reply(eval(comment_inter))
-            break
+        if post_to_reddit:
+            logger.debug("Envoi du commentaire (international)")
+            rdp = reddit.user.me()
+            for post in rdp.submissions.new():
+                post.reply(eval(comment_inter))
+                break
 
     logger.debug("Runtime : %.2f seconds" % (time.time() - temps_debut))
 
@@ -121,8 +128,9 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Reddit bot')
     parser.add_argument('--debug', help="Display debugging information", action="store_const", dest="loglevel", const=logging.DEBUG, default=logging.INFO)
     parser.add_argument('-t', '--test', help="Switch from the revuedepresse to the revuedepresse_test user", dest='test', action='store_true')
+    parser.add_argument('-n', '--no-reddit', help="Alternative to test, without posting to reddit", dest='post_to_reddit', action='store_false')
     parser.add_argument('-i', '--international', help="Add a comment containing the international version on the last post of the user", dest='international', action='store_true')
-    parser.set_defaults(test=False, international=False)
+    parser.set_defaults(test=False, international=False, post_to_reddit=True)
     args = parser.parse_args()
     logging.basicConfig(level=args.loglevel)
     return args
