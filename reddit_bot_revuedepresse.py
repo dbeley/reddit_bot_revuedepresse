@@ -95,7 +95,7 @@ def main():
                 post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
             else:
                 post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
-
+                post.flair.select("48645bbe-1363-11e4-b184-12313b01142d")
     else:
         logger.debug("Scrapping (international)")
         os.system("scrap_revuedepresse --international")
@@ -107,11 +107,6 @@ def main():
             logger.error(str(e))
             exit()
 
-        # logger.debug("Envoi du post")
-        # if test:
-        #     post = reddit.subreddit("test").submit(f"Revue de presse internationale du {jour}", url=url_int)
-        # else:
-        #     post = reddit.subreddit("france").submit(f"Revue de presse internationale du {jour}", url=url_int)
         logger.debug(f"URL international : {url_int}")
 
         if post_to_reddit:
