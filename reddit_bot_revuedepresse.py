@@ -29,14 +29,16 @@ def imgur_folder_upload(directory, client):
 
     album = client.create_album(config_album)
 
-    config_image = {
-            'album': album['deletehash'],
-            'privacy': "public"
-            }
     logger.debug(os.getcwd())
     pathlist = Path(directory).glob('*.jpg')
     for file in sorted(pathlist):
-        logger.debug(f"Upload image {file}")
+        title_file = Path(file).stem.split('_', 1)[-1].replace('_', ' ')
+        config_image = {
+                'album': album['deletehash'],
+                'privacy': "public",
+                'title': title_file
+                }
+        logger.debug(f"Upload image {file}, with title {title_file}")
         client.upload_from_path(str(file), config=config_image)
         time.sleep(8)
 
@@ -96,6 +98,8 @@ def main():
             else:
                 post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
                 post.flair.select("48645bbe-1363-11e4-b184-12313b01142d")
+        else:
+            logger.debug("Pas d'envoi du post")
     else:
         logger.debug("Scrapping (international)")
         os.system("scrap_revuedepresse --international")
@@ -108,14 +112,14 @@ def main():
             exit()
 
         logger.debug(f"URL international : {url_int}")
-
         if post_to_reddit:
             logger.debug("Envoi du commentaire (international)")
             rdp = reddit.user.me()
             for post in rdp.submissions.new():
                 post.reply(eval(comment_inter))
                 break
-
+        else:
+            logger.debug("Pas d'envoi du commentaire")
     logger.debug("Runtime : %.2f seconds" % (time.time() - temps_debut))
 
 
