@@ -3,7 +3,7 @@ Description=bot reddit
 
 [Service]
 Type=oneshot
-WorkingDirectory=%h/Documents/reddit_bot_revuedepresse/
+WorkingDirectory=%h/Documents/scrap_revuedepresse/
 ExecStart=/usr/bin/python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py
 
 [Install]
