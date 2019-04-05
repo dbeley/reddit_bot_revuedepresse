@@ -78,40 +78,22 @@ def main():
             raise
     os.chdir(directory)
 
-    if not international:
-        logger.debug("Scrapping")
-        os.system("scrap_revuedepresse")
-        try:
-            directory_imgur = auj + "/"
-            logger.debug(f"Upload à imgur du dossier {directory_imgur}")
-            url = imgur_folder_upload(directory_imgur, client)
-        except Exception as e:
-            logger.error(str(e))
-            exit()
-
-        logger.debug(f"URL national : {url}")
-
-        if post_to_reddit:
-            logger.debug("Envoi du post")
-            if test:
-                post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
-            else:
-                post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
-                post.flair.select("48645bbe-1363-11e4-b184-12313b01142d")
-        else:
-            logger.debug("Pas d'envoi du post")
+    if international:
+        directory_imgur = auj + "international/"
     else:
-        logger.debug("Scrapping (international)")
-        os.system("scrap_revuedepresse --international")
-        try:
-            directory_imgur_int = auj + "_international/"
-            logger.debug(f"Upload à imgur du dossier {directory_imgur_int}")
-            url_int = imgur_folder_upload(directory_imgur_int, client)
-        except Exception as e:
-            logger.error(str(e))
-            exit()
+        directory_imgur = auj + "/"
+    logger.debug(f"Upload à imgur du dossier {directory_imgur}")
+    if not os.path.isdir(directory_imgur):
+        logger.error("Le dossier contenant les images n'existe pas ou n'a pas été créé par le script scrap_revuedepresse")
+        exit()
 
-        logger.debug(f"URL international : {url_int}")
+    try:
+        url = imgur_folder_upload(directory_imgur, client)
+    except Exception as e:
+        logger.error(str(e))
+        exit()
+
+    if international:
         if post_to_reddit:
             logger.debug("Envoi du commentaire (international)")
             rdp = reddit.user.me()
@@ -120,6 +102,15 @@ def main():
                 break
         else:
             logger.debug("Pas d'envoi du commentaire")
+    else:
+        if post_to_reddit:
+            logger.debug("Envoi du post")
+            if test:
+                post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
+            else:
+                post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
+                post.flair.select("48645bbe-1363-11e4-b184-12313b01142d")
+
     logger.debug("Runtime : %.2f seconds" % (time.time() - temps_debut))
 
 
