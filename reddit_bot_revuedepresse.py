@@ -82,9 +82,9 @@ def main():
         directory_imgur = auj + "international/"
     else:
         directory_imgur = auj + "/"
-    logger.debug(f"Upload à imgur du dossier {directory_imgur}")
+    logger.debug(f"Upload to imgur of {directory_imgur}")
     if not os.path.isdir(directory_imgur):
-        logger.error("Le dossier contenant les images n'existe pas ou n'a pas été créé par le script scrap_revuedepresse")
+        logger.error("The folder containing the images doesn't exist or has not been created by the scrap_revuedepresse script.")
         exit()
 
     try:
@@ -93,23 +93,22 @@ def main():
         logger.error(str(e))
         exit()
 
-    if international:
-        if post_to_reddit:
-            logger.debug("Envoi du commentaire (international)")
+    if post_to_reddit:
+        if international:
+            logger.debug("Sending comment (international version)")
             rdp = reddit.user.me()
             for post in rdp.submissions.new():
                 post.reply(eval(comment_inter))
                 break
         else:
-            logger.debug("Pas d'envoi du commentaire")
-    else:
-        if post_to_reddit:
-            logger.debug("Envoi du post")
+            logger.debug("Sending post")
             if test:
                 post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
             else:
                 post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
                 post.flair.select("48645bbe-1363-11e4-b184-12313b01142d")
+    else:
+        logger.debug("No-reddit mode activated. Nothing will be posted.")
 
     logger.debug("Runtime : %.2f seconds" % (time.time() - temps_debut))
 
