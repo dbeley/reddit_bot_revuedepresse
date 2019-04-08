@@ -6,8 +6,8 @@ Reddit bot behind the /u/revuedepresse account.
 
 - python-praw
 - python-imgurpython
-- imgur config
-- praw.ini
+- imgur config (in the folder set in the systemd service file)
+- praw.ini (in the folder set in the systemd service file)
 - systemd files in ~/.config/systemd/user/
 - [scrap_revuedepresse](https://github.com/dbeley/scrap_revuedepresse)
 

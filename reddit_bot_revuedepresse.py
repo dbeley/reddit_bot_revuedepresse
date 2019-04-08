@@ -51,6 +51,7 @@ def imgur_folder_upload(directory, client):
 def main():
     args = parse_args()
     test = args.test
+    folder = args.folder
     post_to_reddit = args.post_to_reddit
     international = args.international
     locale.setlocale(locale.LC_TIME, "fr_FR.utf-8")
@@ -78,10 +79,13 @@ def main():
             raise
     os.chdir(directory)
 
-    if international:
-        directory_imgur = auj + "international/"
+    if folder:
+        directory_imgur = folder
     else:
-        directory_imgur = auj + "/"
+        if international:
+            directory_imgur = auj + "international/"
+        else:
+            directory_imgur = auj + "/"
     logger.debug(f"Upload à imgur du dossier {directory_imgur}")
     if not os.path.isdir(directory_imgur):
         logger.error("Le dossier contenant les images n'existe pas ou n'a pas été créé par le script scrap_revuedepresse")
@@ -117,6 +121,7 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser(description='Reddit bot')
     parser.add_argument('--debug', help="Display debugging information", action="store_const", dest="loglevel", const=logging.DEBUG, default=logging.INFO)
+    parser.add_argument('-f', '--folder', help="Folder containing the images to export", type=str)
     parser.add_argument('-t', '--test', help="Switch from the revuedepresse to the revuedepresse_test user", dest='test', action='store_true')
     parser.add_argument('-n', '--no-reddit', help="Alternative to test, without posting to reddit", dest='post_to_reddit', action='store_false')
     parser.add_argument('-i', '--international', help="Add a comment containing the international version on the last post of the user", dest='international', action='store_true')
