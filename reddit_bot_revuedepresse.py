@@ -23,13 +23,14 @@ def redditconnect(bot):
 
 def imgur_folder_upload(directory, client):
     logger.debug(os.getcwd())
+    os.chdir(directory)
+    logger.debug(os.getcwd())
     config_album = {
             'privacy': "public"
             }
 
     album = client.create_album(config_album)
 
-    logger.debug(os.getcwd())
     pathlist = Path(directory).glob('*.jpg')
     for file in sorted(pathlist):
         title_file = Path(file).stem.split('_', 1)[-1].replace('_', ' ')
@@ -71,27 +72,17 @@ def main():
     with open('comment_inter.txt', 'r') as myfile:
         comment_inter = myfile.read()
 
-    directory = "Images"
-    try:
-        os.makedirs(os.path.expanduser(directory))
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            raise
-    os.chdir(directory)
-
     if folder:
         directory_imgur = folder
     else:
-<<<<<<< HEAD
         if international:
+            directory_imgur = f"Images/{auj}_international/"
             directory_imgur = auj + "international/"
         else:
+            directory_imgur = f"Images/{auj}/"
             directory_imgur = auj + "/"
     logger.debug(f"Upload à imgur du dossier {directory_imgur}")
-=======
-        directory_imgur = auj + "/"
-    logger.debug(f"Upload to imgur of {directory_imgur}")
->>>>>>> c03571c435acde3de290ad70db74c9e786ee4153
+
     if not os.path.isdir(directory_imgur):
         logger.error("The folder containing the images doesn't exist or has not been created by the scrap_revuedepresse script.")
         exit()
