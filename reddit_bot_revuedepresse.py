@@ -77,10 +77,8 @@ def main():
     else:
         if international:
             directory_imgur = f"Images/{auj}_international/"
-            directory_imgur = auj + "international/"
         else:
             directory_imgur = f"Images/{auj}/"
-            directory_imgur = auj + "/"
     logger.debug(f"Upload à imgur du dossier {directory_imgur}")
 
     if not os.path.isdir(directory_imgur):
