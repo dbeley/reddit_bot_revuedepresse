@@ -23,8 +23,6 @@ def redditconnect(bot):
 
 def imgur_folder_upload(directory, client):
     logger.debug(os.getcwd())
-    os.chdir(directory)
-    logger.debug(os.getcwd())
     config_album = {
             'privacy': "public"
             }

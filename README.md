@@ -11,6 +11,13 @@ Reddit bot behind the /u/revuedepresse account.
 - systemd files in ~/.config/systemd/user/
 - [scrap_revuedepresse](https://github.com/dbeley/scrap_revuedepresse)
 
+The systemd service needs some files to be placed on the folder indicated in its WorkingDirectory directive for the service to work properly :
+
+- praw.ini
+- imgur config
+- comment_inter.txt
+
+
 ## Usage
 
 ```
