@@ -4,7 +4,7 @@ Description=Run the revuedepresse script daily (international version)
 [Timer]
 #OnBootSec=15min
 #OnUnitActiveSec=1d
-OnCalendar=*-*-* 08:52:00
+OnCalendar=*-*-* 09:22:00
 
 [Install]
 WantedBy=timers.target

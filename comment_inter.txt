@@ -1,7 +1,7 @@
 f"""
 ## Revue de presse Internationale
 
-{url_int}
+{url}
 
 ### Pays d'origine des journaux
 
@@ -35,6 +35,8 @@ The Star | Afrique du Sud
 O Globo | Brésil
 Clarín | Argentine
 The Australian | Australie
+
+___
 
 ## Code source
 
