@@ -4,7 +4,10 @@ Description=bot reddit
 [Service]
 Type=oneshot
 WorkingDirectory=%h/Documents/scrap_revuedepresse/
-ExecStart=/usr/bin/python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py --international
+# Without virtualenv
+# ExecStart=/usr/bin/python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py --international
+# With virtualenv
+ExecStart=%h/Documents/reddit_bot_revuedepresse/venv/bin/python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py --international
 
 [Install]
 WantedBy=multi-user.target
