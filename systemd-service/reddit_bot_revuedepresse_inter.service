@@ -9,7 +9,7 @@ WorkingDirectory=%h/Documents/scrap_revuedepresse/
 # With virtualenv
 # ExecStart=%h/Documents/reddit_bot_revuedepresse/venv/bin/python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py --international
 # With pipenv
-ExecStart=/usr/bin/pipenv run python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py --international
+ExecStart=%h/Documents/reddit_bot_revuedepresse/.venv/bin/python %h/Documents/reddit_bot_revuedepresse/reddit_bot_revuedepresse.py --international
 
 [Install]
 WantedBy=multi-user.target
