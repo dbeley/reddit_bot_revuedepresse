@@ -1,7 +1,8 @@
+.venv/
+Images/
+__pycache__/
 config_imgur
 praw.ini
 reddit_bot_revuedepresse/
-Images/
-__pycache__/
-test*
 tags
+test*
