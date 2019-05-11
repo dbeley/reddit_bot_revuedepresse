@@ -5,7 +5,6 @@ import praw
 import os
 import logging
 import locale
-import errno
 import configparser
 from imgurpython import ImgurClient
 from pathlib import Path
