@@ -36,8 +36,8 @@ def imgur_folder_upload(directory, client):
                 'privacy': "public",
                 'title': title_file
                 }
-        logger.debug(f"Upload image {file}, with title {title_file}")
         client.upload_from_path(str(file), config=config_image)
+        logger.info(f"Image {file} uploaded, with title {title_file}")
         time.sleep(8)
 
     final_url = f"https://imgur.com/a/{album['id']}"
@@ -101,6 +101,7 @@ def main():
                 post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
             else:
                 post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
+                # "Actus" flair
                 post.flair.select("48645bbe-1363-11e4-b184-12313b01142d")
     else:
         logger.debug("No-reddit mode activated. Nothing will be posted.")

@@ -2,16 +2,24 @@
 
 Reddit bot behind the /u/revuedepresse account.
 
+## Installation of the virtualenv
+
+```
+pipenv install
+```
+
 ## Requirements
 
-- python-praw
-- python-imgurpython
+= requests
+- praw
+- imgurpython
 - imgur config (in the folder set in the systemd service file)
 - praw.ini (in the folder set in the systemd service file)
+- comment_inter.txt (in the folder set in the systemd service file)
 - systemd files in ~/.config/systemd/user/
 - [scrap_revuedepresse](https://github.com/dbeley/scrap_revuedepresse)
 
-The systemd service needs some files to be placed on the folder indicated in its WorkingDirectory directive for the service to work properly :
+The systemd service needs some config files to be placed on the folder indicated in its WorkingDirectory directive for the service to work properly :
 
 - praw.ini
 - imgur config
