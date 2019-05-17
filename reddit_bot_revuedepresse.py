@@ -37,7 +37,7 @@ def imgur_folder_upload(directory, client):
                 'title': title_file
                 }
         client.upload_from_path(str(file), config=config_image)
-        logger.info(f"Image {file} uploaded, with title {title_file}")
+        logger.info("Image %s uploaded, with title %s", file, title_file)
         time.sleep(8)
 
     final_url = f"https://imgur.com/a/{album['id']}"
@@ -48,10 +48,6 @@ def imgur_folder_upload(directory, client):
 
 def main():
     args = parse_args()
-    test = args.test
-    folder = args.folder
-    post_to_reddit = args.post_to_reddit
-    international = args.international
     locale.setlocale(locale.LC_TIME, "fr_FR.utf-8")
     auj = datetime.datetime.now().strftime("%Y-%m-%d")
     jour = datetime.datetime.now().strftime("%A %d %B %Y")
@@ -61,7 +57,7 @@ def main():
     client_secret = config['imgur']['client_secret']
     client = ImgurClient(client_id, client_secret)
 
-    if test:
+    if args.test:
         reddit = redditconnect('revuedepresse_test')
     else:
         reddit = redditconnect('revuedepresse')
@@ -69,14 +65,14 @@ def main():
     with open('comment_inter.txt', 'r') as myfile:
         comment_inter = myfile.read()
 
-    if folder:
-        directory_imgur = folder
+    if args.folder:
+        directory_imgur = args.folder
     else:
-        if international:
+        if args.international:
             directory_imgur = f"Images/{auj}_international/"
         else:
             directory_imgur = f"Images/{auj}/"
-    logger.debug(f"Upload à imgur du dossier {directory_imgur}")
+    logger.debug("Upload à imgur du dossier %s", directory_imgur)
 
     if not os.path.isdir(directory_imgur):
         logger.error("The folder containing the images doesn't exist or has not been created by the scrap_revuedepresse script.")
@@ -88,8 +84,8 @@ def main():
         logger.error(str(e))
         exit()
 
-    if post_to_reddit:
-        if international:
+    if args.post_to_reddit:
+        if args.international:
             logger.debug("Sending comment (international version)")
             rdp = reddit.user.me()
             for post in rdp.submissions.new():
@@ -97,7 +93,7 @@ def main():
                 break
         else:
             logger.debug("Sending post")
-            if test:
+            if args.test:
                 post = reddit.subreddit("test").submit(f"Revue de presse du {jour}", url=url)
             else:
                 post = reddit.subreddit("france").submit(f"Revue de presse du {jour}", url=url)
