@@ -10,7 +10,7 @@ pipenv install
 
 ## Requirements
 
-= requests
+- requests
 - praw
 - imgurpython
 - imgur config (in the folder set in the systemd service file)
