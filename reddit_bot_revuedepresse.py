@@ -41,7 +41,7 @@ def imgur_folder_upload(directory, client):
         time.sleep(8)
 
     final_url = f"https://imgur.com/a/{album['id']}"
-    logger.debug(final_url)
+    logger.info("Folder successfully uploaded to %s", final_url)
 
     return(final_url)
 
