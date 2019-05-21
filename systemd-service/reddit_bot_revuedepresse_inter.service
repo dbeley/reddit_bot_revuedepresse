@@ -1,5 +1,5 @@
 [Unit]
-Description=bot reddit
+Description=reddit_bot_revuedepresse_inter.service
 
 [Service]
 Type=oneshot
