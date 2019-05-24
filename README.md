@@ -2,7 +2,7 @@
 
 Reddit bot behind the /u/revuedepresse account.
 
-## Installation of the virtualenv
+## Installation of the virtualenv (recommended)
 
 ```
 pipenv install
@@ -32,4 +32,27 @@ The systemd service needs some config files to be placed on the folder indicated
 systemctl --user daemon-reload
 systemctl --user enable --now reddit_bot_revuedepresse.timer
 systemctl --user start reddit_bot_revuedepresse
+```
+
+## Help
+
+```
+python reddit_bot_revuedepresse.py -h
+```
+
+```
+usage: reddit_bot_revuedepresse.py [-h] [--debug] [-f FOLDER] [-t] [-n] [-i]
+
+Reddit bot
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --debug               Display debugging information
+  -f FOLDER, --folder FOLDER
+                        Folder containing the images to export
+  -t, --test            Switch from the revuedepresse to the
+                        revuedepresse_test user
+  -n, --no-reddit       Alternative to test, without posting to reddit
+  -i, --international   Add a comment containing the international version on
+                        the last post of the user
 ```
