@@ -1,5 +1,7 @@
 # reddit_bot_revuedepresse
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1383acf4232749fb814f8d020a5e28a1)](https://app.codacy.com/app/dbeley/reddit_bot_revuedepresse?utm_source=github.com&utm_medium=referral&utm_content=dbeley/reddit_bot_revuedepresse&utm_campaign=Badge_Grade_Dashboard)
+
 Reddit bot behind the /u/revuedepresse account.
 
 ## Installation of the virtualenv (recommended)
