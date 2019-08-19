@@ -45,6 +45,7 @@ def imgur_folder_upload(directory, client):
 
 
 def main():
+    logger.debug("Parsing arguments.")
     args = parse_args()
     locale.setlocale(locale.LC_TIME, "fr_FR.utf-8")
     auj = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -56,6 +57,7 @@ def main():
     client = ImgurClient(client_id, client_secret)
 
     if args.test:
+        logger.debug("Test account selected.")
         reddit = redditconnect("revuedepresse_test")
     else:
         reddit = redditconnect("revuedepresse")
@@ -70,7 +72,7 @@ def main():
             directory_imgur = f"Images/{auj}_international/"
         else:
             directory_imgur = f"Images/{auj}/"
-    logger.debug("Upload à imgur du dossier %s", directory_imgur)
+    logger.debug("Upload à imgur du dossier %s.", directory_imgur)
 
     if not os.path.isdir(directory_imgur):
         logger.error(
@@ -84,29 +86,32 @@ def main():
         logger.error(str(e))
         exit()
 
+    logger.debug("Upload to imgur successful. URL of the album : %s.", url)
     if args.post_to_reddit:
         if args.international:
-            logger.debug("Sending comment (international version)")
+            logger.debug("Sending comment (international version).")
             rdp = reddit.user.me()
             for post in rdp.submissions.new():
                 post.reply(eval(comment_inter))
                 break
         else:
-            logger.debug("Sending post")
             if args.test:
+                logger.debug("Sending post to /r/test.")
                 post = reddit.subreddit("test").submit(
                     f"Revue de presse du {jour}", url=url
                 )
             else:
+                logger.debug("Sending post to /r/france.")
                 post = reddit.subreddit("france").submit(
                     f"Revue de presse du {jour}", url=url
                 )
                 # "Actus" flair
+                logger.debug("Selecting flair Actus.")
                 post.flair.select("48645bbe-1363-11e4-b184-12313b01142d")
     else:
         logger.debug("No-reddit mode activated. Nothing will be posted.")
 
-    logger.debug("Runtime : %.2f seconds" % (time.time() - temps_debut))
+    logger.debug("Runtime : %.2f seconds." % (time.time() - temps_debut))
 
 
 def parse_args():
